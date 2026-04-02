@@ -8,7 +8,7 @@ public:
         else return f(low , mid -1 , arr , k);
     }
     int search(vector<int>& nums, int target) {
-        sort(nums.begin() , nums.end());
+        // sort(nums.begin() , nums.end());
         int n = nums.size();
         return f(0 , n-1 , nums , target);
     }
