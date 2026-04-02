@@ -2,18 +2,13 @@ class Solution {
 public:
     int shipWithinDays(vector<int>& arr, int days) {
         int low = *max_element(arr.begin(), arr.end());
-        int high = 0;
-        int n = arr.size();
-        for(int i = 0; i < n ; i++){
-           high += arr[i];
-        }
+        int high = accumulate(arr.begin() , arr.end() , 0);
         int ans = 0;
-        
         while(low <= high){
             int mid = (low + high)/2;
             int count = 1;
             int sum = 0;
-            for(int i = 0 ; i < n ; i++){
+            for(int i = 0 ; i < arr.size() ; i++){
                 if(sum + arr[i] > mid){
                     sum = arr[i];
                     count++;
