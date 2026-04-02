@@ -1,15 +1,15 @@
 class Solution {
 public:
+    int f(int low , int high , vector<int> &arr , int k){
+        if(low > high) return -1;
+        int mid = (low + high)/2;
+        if(arr[mid] == k) return mid;
+        else if(arr[mid] < k) return f(mid + 1 , high , arr , k);
+        else return f(low , mid -1 , arr , k);
+    }
     int search(vector<int>& nums, int target) {
         sort(nums.begin() , nums.end());
-        int low = 0;
-        int high = nums.size() -1;
-        while(low <= high){
-            int mid = (low + high)/2;
-            if(nums[mid] == target) return mid;
-            else if(target > nums[mid]) low = mid + 1;
-            else high = mid -1;
-        }
-        return -1;
+        int n = nums.size();
+        return f(0 , n-1 , nums , target);
     }
 };
