@@ -1,36 +1,41 @@
 class Solution {
 public:
-    int No_of_subarrays(vector<int>& nums, int n, int number) {
-        int nos = 1;
+    int f(vector<int> &arr , int p){
+        int cnt = 1;
         int sum = 0;
-        for (int i = 0; i < n; i++) {
-            if (sum + nums[i] <= number){
-                sum += nums[i];
+        for(int i = 0 ; i < arr.size() ; i++){
+            if(sum + arr[i] <= p){
+                sum += arr[i];
             }
             else{
-                nos++;
-                sum = nums[i];
+                cnt++;
+                sum = arr[i];
             }
         }
-        return nos;
+        return cnt;
     }
-    int splitArray(vector<int>& nums, int k) {
-        int low = INT_MIN, high = 0;
-        int n = nums.size();
+    
+    int splitArray(vector<int>& arr, int k) {
+        int n = arr.size();
+        int high = accumulate(arr.begin(), arr.end(), 0);
+        int low = INT_MIN;
+        int ans = 0;
+        if (n < k)
+            return -1;
         for (int i = 0; i < n; i++) {
-            high += nums[i];
-            low = max(low, nums[i]);
+            low = max(low, arr[i]);
         }
         while (low <= high) {
+
             int mid = (low + high) / 2;
-            int no_of_subarrays = No_of_subarrays(nums, n, mid);
-            if(k < no_of_subarrays){
-                low = mid+1;
-            }
-            else{
-                high = mid-1;
+
+            if (k >= f(arr, mid)) {
+                ans = mid;
+                high = mid - 1;
+            } else {
+                low = mid + 1;
             }
         }
-        return low;
+        return ans;
     }
 };
