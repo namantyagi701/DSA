@@ -24,10 +24,10 @@ public:
         long long temp = 1LL * m *k;
         if(temp > n) return -1;
         int ans = 0;
-        int low = 1;
+        int low = 1 ;
         int high = INT_MIN;
         for(int i = 0 ; i < n ; i++){
-            low = min(low , arr[i]);
+           
             high = max(high , arr[i]);
         }
         while(low <= high){
