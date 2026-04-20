@@ -6,9 +6,11 @@ public:
         int maxi = 0;
         if(flag){
             if(arr[i-1] < arr[i]) take = 1 + f(i + 1 , !flag , arr);
+            else return 0;
         }
         else{
             if(arr[i-1] > arr[i]) take = 1 + f(i + 1, !flag , arr);
+            else return 0;
         }
         return take;
     }
