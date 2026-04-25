@@ -1,28 +1,34 @@
 class Solution {
 public:
-    unordered_map<string , int >dp;
-    unordered_set<string>st;
-    
-    int solve(string w){
-        if(dp.count(w)) return dp[w];
-
-        int maxLen = 1;
-        for(int i = 0 ; i < w.size() ; i++){
-            string prev = w.substr(0 , i) + w.substr(i + 1);
-
-            if(st.count(prev)){
-                maxLen = max(maxLen , 1 + solve(prev));
-            }
+    bool f(string& s1 , string& s2) { //s1 - small , s2 -> large
+       if(s2.size() != 1+ s1.size()) return false;
+       int i = 0 , j = 0;
+       while(j < s2.size()){
+        if(i < s1.size() && s1[i] == s2[j]){
+            i++;   
+            j++;
         }
-        return dp[w] = maxLen;
+        else{
+            j++;
+        }
+       }
+       return i == s1.size();
     }
-    int longestStrChain(vector<string>& words) {
-        for(auto &w : words) st.insert(w);
 
-        int ans = 1;
-        for(int i = 0 ; i < words.size() ; i++){
-            ans = max(ans , solve(words[i] ));
+    int longestStrChain(vector<string>& words) {
+        int n = words.size();
+        sort(words.begin(), words.end(),
+             [](string& a, string& b) { return a.size() < b.size(); });
+        int maxi = 1;
+        vector<int> dp(n, 1);
+        for (int i = n - 1; i >= 0; i--) {
+            for (int prev = n - 1; prev > i; prev--) {
+                if (f(words[i], words[prev])) {
+                    dp[i] = max(dp[i], 1 + dp[prev]);
+                }
+            }
+            maxi = max(maxi, dp[i]);
         }
-        return ans;
+        return maxi;
     }
 };
