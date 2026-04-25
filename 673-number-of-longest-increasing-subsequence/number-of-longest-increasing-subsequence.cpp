@@ -1,31 +1,28 @@
 class Solution {
 public:
-    int findNumberOfLIS(vector<int>& nums) { 
+    int findNumberOfLIS(vector<int>& nums) {
         int n = nums.size();
-        vector<int> lis(n ,1);
-        vector<int>count(n,1);
+        vector<int>dp(n , 1);
+        vector<int>count(n , 1);
+        int maxi = 1;
         for(int i = 0 ; i < n ; i++){
-            for(int j = 0 ; j < i ;j++){
-                if(nums[i] > nums[j]){
-                    if(lis[i] < lis[j] + 1){
-                       lis[i] = lis[j] + 1;
-                       count[i] = count[j];
-                    }
-                    else if(lis[i] == lis[j] + 1){
-                       count[i] += count[j];
-                    }
+            for(int prev = 0 ; prev < i ; prev++){
+                if(nums[i] > nums[prev] && dp[i] < 1 + dp[prev]){
+                    dp[i] = 1 + dp[prev];
+                    count[i] = count[prev];
+                }
+                else if(nums[i] > nums[prev] && dp[i] == 1+dp[prev]){
+                    count[i] += count[prev];
                 }
             }
+            maxi = max(maxi , dp[i]);
         }
-        int ans = INT_MIN;
-        int res = 1;
-        for(int i = 0 ; i < n ; i++){
-            if(lis[i] > ans){
-                ans = lis[i];
-                res = count[i];
+            int cnt = 0;
+            for(int i = 0 ; i < n ; i++){
+                if(dp[i] == maxi){
+                    cnt += count[i];
+                }
             }
-            else if(lis[i] == ans) res += count[i];
-        }
-        return res;
+        return cnt;
     }
 };
