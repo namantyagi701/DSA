@@ -11,7 +11,7 @@ public:
         // update diameter
         maxi = max(maxi, l + r);
 
-        return 1 + max(l, r);
+       return 1 + max(l, r);
     }
 
     int diameterOfBinaryTree(TreeNode* root) {
