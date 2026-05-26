@@ -4,10 +4,11 @@ public:
         unordered_map<int,int>mpp;
         mpp[0] = 1;
         int pref = 0;
+        int rem = 0;
         int ans = 0;
         for(int i = 0 ; i < nums.size() ; i++){
             pref += nums[i];
-            int rem = pref - k;
+            rem  = pref - k;
             ans += mpp[rem];
             mpp[pref]++;
         }
