@@ -12,25 +12,27 @@
 class Solution {
 public:
     unordered_map<int,int>mpp;
+    int postIdx;
     TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
         int n = inorder.size();
+        postIdx = n-1;
         for(int i = 0 ; i < n ; i++){
-            mpp[inorder[i]]=i;
+            mpp[inorder[i]] = i;
         }
-        int preIdx = n-1;
-        return build(postorder , 0 , n-1 , preIdx);
+        return build(postorder , n-1 , 0);
     }
-    TreeNode* build(vector<int>&preorder, int start , int end ,int & preIdx){
+
+    TreeNode* build(vector<int>& postorder , int end , int start){
         if(start > end) return NULL;
-
-        int nodeVal = preorder[preIdx--];
-        TreeNode* node = new TreeNode(nodeVal);
-
+        
+        int nodeVal = postorder[postIdx--];
         int idx = mpp[nodeVal];
 
-        node -> right = build(preorder , idx+1 , end, preIdx);
-        node -> left = build(preorder , start , idx -1,preIdx);
+        TreeNode* node = new TreeNode(nodeVal);
 
-        return node; 
+        node -> right = build(postorder , end  , idx + 1);
+        node -> left = build(postorder , idx - 1 , start);
+
+        return node;
     }
 };
