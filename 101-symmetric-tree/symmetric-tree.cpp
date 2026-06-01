@@ -20,8 +20,8 @@ public:
     }
     bool isSymmetric(TreeNode* root) {
        if(!root) return true;
-       if(root -> left && !root -> right) return false;
-       if(!root -> left && root -> right) return false;
+    //    if(root -> left && !root -> right) return false;
+    //    if(!root -> left && root -> right) return false;
        return f(root-> left , root -> right);
     }
 };
