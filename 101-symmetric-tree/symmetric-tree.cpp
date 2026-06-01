@@ -11,14 +11,17 @@
  */
 class Solution {
 public:
-    bool f(TreeNode* node1 , TreeNode* node2){
-        if(node1 == NULL && node2 != NULL) return false; 
-        if(node1 != NULL && node2 == NULL) return false; 
-        if(node1 == NULL && node2 == NULL) return true;
+    bool f(TreeNode* root1 , TreeNode* root2){
+        if(!root1 && !root2) return true;
+        if(!root1) return false;
+        if(!root2) return false;
 
-        return((node1 -> val == node2 -> val) && f(node1->left , node2-> right) && f(node1 -> right , node2 -> left));
+        return (root1 -> val == root2 -> val) && f(root1-> left , root2 -> right) && f(root1 ->right , root2-> left);
     }
     bool isSymmetric(TreeNode* root) {
-        return f(root -> right , root -> left);
+       if(!root) return true;
+       if(root -> left && !root -> right) return false;
+       if(!root -> left && root -> right) return false;
+       return f(root-> left , root -> right);
     }
 };
