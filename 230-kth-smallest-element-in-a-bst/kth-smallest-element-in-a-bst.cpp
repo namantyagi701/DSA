@@ -11,16 +11,34 @@
  */
 class Solution {
 public:
-    void f(TreeNode* root , vector<int> &ans){
-       if(root == NULL) return;
-
-       f(root -> left, ans);
-       ans.push_back(root -> val);
-       f(root -> right, ans); 
-    }
     int kthSmallest(TreeNode* root, int k) {
-        vector<int>ans;
-        f(root , ans);
-        return ans[k-1];
+        int cnt = 0;
+        // vector<int>inorder;
+        int ans = -1;
+        TreeNode* curr = root;
+        while(curr != NULL){
+            if(curr -> left == NULL){
+                cnt++;
+                if(cnt == k) ans = curr -> val;
+                curr = curr -> right;
+            }
+            else{
+                TreeNode* prev = curr -> left;
+                while(prev -> right && prev -> right != curr){
+                    prev = prev -> right;
+                }
+                if(prev -> right == NULL){
+                    prev ->right = curr;
+                    curr = curr -> left;
+                }
+                else{
+                    prev -> right = NULL;
+                    cnt++;
+                    if(cnt == k) ans = curr -> val;
+                    curr = curr -> right;
+                }
+            }
+        }
+        return ans;
     }
 };
