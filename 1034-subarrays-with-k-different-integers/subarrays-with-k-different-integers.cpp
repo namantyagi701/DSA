@@ -2,7 +2,7 @@ class Solution {
 public:
     int f(vector<int> &nums , int k){
         unordered_map<int , int>mpp;
-        if(k < 0) return 0;
+        // if(k < 0) return 0;
         int l = 0;
         int r = 0;
         int cnt = 0;
