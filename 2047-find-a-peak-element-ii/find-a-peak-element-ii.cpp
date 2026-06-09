@@ -19,8 +19,6 @@ public:
                 arr[1] = j;
                 break;
             }
-
-            cout << i << " " << j << endl;
         }
 
         if (j < m - 1 && mat[i][j + 1] > mat[i][j]) {
