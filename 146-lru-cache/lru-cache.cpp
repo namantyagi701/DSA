@@ -2,7 +2,7 @@ class LRUCache {
 public:
     int cap;
     list<pair<int,int>>dll;
-    map<int , list<pair<int,int>> :: iterator> mp;
+    unordered_map<int , list<pair<int,int>> :: iterator> mp;
     LRUCache(int capacity) {
         cap = capacity;
     }
