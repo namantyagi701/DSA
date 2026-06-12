@@ -22,6 +22,7 @@ public:
     void put(int key, int value) {
         if(mp.find(key) != mp.end()){
             dll.erase(mp[key]);
+            mp.erase(key);
         }
         else if(dll.size() == cap){
            auto node = dll.back();
