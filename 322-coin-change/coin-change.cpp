@@ -12,12 +12,9 @@ public:
         }
 
         for (int i = 1; i < n; i++) {
-            for (int kk = 0; kk <= k; kk++) {
+            for (int kk = arr[i]; kk <= k; kk++) {
                 int nt = curr[kk];
-                int t = 1e7;
-                if (kk >= arr[i]) {
-                    t = 1 + curr[kk-arr[i]];
-                }
+                int t = 1 + curr[kk-arr[i]];
                 curr[kk] = min(t, nt);
             }
         }
