@@ -24,26 +24,29 @@ public:
         sort(arr.begin(), arr.end());
         int n = arr.size();
         vector<vector<int>> dp(n, vector<int>(k + 1, 0));
-
+        
+        vector<int>prev(k + 1 , 0);
+        vector<int>curr(k + 1 , 0);
         for (int j = 0; j <= k; j++) {
             if ((j % arr[0]) == 0) {
-                dp[0][j] = (j / arr[0]);
+                prev[j] = (j / arr[0]);
             } else
-                dp[0][j] = 1e7;
+                prev[j] = 1e7;
         }
 
         for (int i = 1; i < n; i++) {
             for (int kk = 0; kk <= k; kk++) {
-                int nt = dp[i-1][kk];
+                int nt = prev[kk];
                 int t = 1e7;
                 if (kk >= arr[i]) {
-                    t = 1 + dp[i][kk-arr[i]];
+                    t = 1 + curr[kk-arr[i]];
                 }
-                dp[i][kk] = min(t, nt);
+                curr[kk] = min(t, nt);
             }
+            prev = curr;
         }
 
-        int ans = dp[n-1][k];
+        int ans = prev[k];
 
         if (ans == 1e7)
             return -1;
