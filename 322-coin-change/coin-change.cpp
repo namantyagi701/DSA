@@ -21,9 +21,8 @@ public:
     //     return dp[i][k] = min(t, nt);
     // }
     int coinChange(vector<int>& arr, int k) {
-        sort(arr.begin(), arr.end());
+        // sort(arr.begin(), arr.end());
         int n = arr.size();
-        vector<vector<int>> dp(n, vector<int>(k + 1, 0));
         
         vector<int>prev(k + 1 , 0);
         vector<int>curr(k + 1 , 0);
