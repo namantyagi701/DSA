@@ -11,7 +11,6 @@ public:
             }
             if(minidx < i){
                 ans = max(ans , arr[i] - mini);
-                cout<<ans;
             }
         }
         return ans;
