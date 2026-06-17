@@ -11,26 +11,26 @@ public:
         return 1;
     }
 
-    int f(int i ,int j , string &s , vector<vector<int>> &dp){
-        if(i > j) return 0;
+    int f(int i ,  string &s , vector<int> &dp){
+        if(i >= s.size()) return 0;
 
-        if(dp[i][j] != -1) return dp[i][j];
+        if(dp[i] != -1) return dp[i];
 
         int mini = 1e9;
-        for(int k = j ; k >= i ; k--){
+        for(int k = s.size()-1 ; k >= i ; k--){
             int curr = 0;
             if(isPalindrome(i , k , s)){
-                curr = 1 + f(k+1 , j , s , dp);
+                curr = 1 + f(k+1, s , dp);
                 mini = min(mini , curr);
             }
         }
-        return dp[i][j] = mini;
+        return dp[i] = mini;
     }
 
     int minCut(string s) {
         int n = s.size();
-        if(n == 1) return 0;
-        vector<vector<int>>dp(n , vector<int>(n , -1));
-        return f(0 , n-1 , s , dp) -1;
+        // if(n == 1) return 0;
+        vector<int> dp(n+1 , -1);
+        return f(0 ,s , dp) -1;
     }
 };
