@@ -1,42 +1,35 @@
 class Solution {
 public:
-    bool canFinish(int V, vector<vector<int>>& prerequisites) {
-
-        vector<vector<int>> adj(V);
-
-        for(int i = 0; i < prerequisites.size(); i++) {
-
-            int u = prerequisites[i][1];
-            int v = prerequisites[i][0];
-
-            adj[u].push_back(v);
+    bool canFinish(int n, vector<vector<int>>& arr) {
+        vector<int>indegree(n);
+        vector<vector<int>>adj(n);
+        for(int i = 0 ; i < arr.size() ; i++){
+            int u = arr[i][0];
+            int v = arr[i][1];
+            adj[v].push_back(u);
         }
-        vector<int>indegree(V);
-        for(int i = 0 ; i < V ; i++){
-            for(auto it: adj[i]){
-               indegree[it]++; 
+        for(int i = 0 ; i < n ; i++){
+            for(auto it : adj[i]){
+                indegree[it]++;
             }
         }
-
         queue<int>q;
-        vector<int>topo;
-
-        for(int i = 0 ; i < indegree.size() ; i++){
+        for(int i = 0 ; i < n ; i++){
             if(indegree[i] == 0){
                 q.push(i);
             }
         }
         while(!q.empty()){
-            int node = q.front();
+            int ele = q.front();
             q.pop();
-            topo.push_back(node);
-            for(auto it: adj[node]){
+            for(auto it: adj[ele]){
                 indegree[it]--;
                 if(indegree[it] == 0) q.push(it);
             }
         }
-        int size = topo.size();
-        if(size == V) return true;
-        return false;
+        for(int i = 0 ; i < n ; i++){
+            if(indegree[i] != 0) return false;
+        }
+        return true;
     }
 };
