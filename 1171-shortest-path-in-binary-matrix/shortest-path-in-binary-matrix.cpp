@@ -2,43 +2,33 @@ class Solution {
 public:
     int shortestPathBinaryMatrix(vector<vector<int>>& grid) {
         int n = grid.size();
-        
-        if (grid[0][0] == 1 || grid[n-1][n-1] == 1)
+        if (grid[n - 1][n - 1] != 0 || grid[0][0] != 0)
             return -1;
+        set<pair<int, pair<int, int>>> st;
+        vector<vector<int>>minDis(n , vector<int>(n , INT_MAX));
+        st.insert({1, {0, 0}});
+        minDis[0][0] = 1;
+        int dx[] = {-1, -1, -1, 0, 0, 1, 1, 1};
+        int dy[] = {-1, 0, 1, -1, 1, -1, 0, 1};
+        while (!st.empty()) {
+            auto ele = *st.begin();
+            st.erase(st.begin());
+            int dist = ele.first;
+            int row = ele.second.first;
+            int col = ele.second.second;
 
-        queue<pair<int, pair<int,int>>> q;
-        q.push({1, {0, 0}});  
-
-        vector<vector<int>> vis(n, vector<int>(n, 0));
-        vis[0][0] = 1;
-
-        int dx[8] = {-1, -1, -1, 0, 1, 1, 1, 0};
-        int dy[8] = {-1, 0, 1, 1, 1, 0, -1, -1};
-
-        while (!q.empty()) {
-            auto it = q.front();
-            q.pop();
-
-            int dist = it.first;
-            int row = it.second.first;
-            int col = it.second.second;
-
-            if (row == n-1 && col == n-1)
-                return dist;
-
-            for (int i = 0; i < 8; i++) {
+            for(int i = 0 ; i < 8 ; i++){
                 int nRow = row + dx[i];
                 int nCol = col + dy[i];
-
-                if (nRow >= 0 && nRow < n && nCol >= 0 && nCol < n &&
-                    grid[nRow][nCol] == 0 && !vis[nRow][nCol]) {
-                    
-                    vis[nRow][nCol] = 1;
-                    q.push({dist + 1, {nRow, nCol}});
+                if(nRow >= 0 && nRow < n && nCol >= 0 && nCol < n && grid[nRow][nCol] == 0 && grid[nRow][nCol] == 0){
+                    if(minDis[nRow][nCol] > 1 + dist){
+                        minDis[nRow][nCol] = 1 + dist;
+                        st.insert({1+dist , {nRow , nCol}});
+                    }
                 }
             }
         }
-
-        return -1;
+        if(minDis[n-1][n-1] == INT_MAX) return -1;
+        return minDis[n-1][n-1];
     }
 };
