@@ -39,11 +39,10 @@ public:
             int v = arr[i][1];
             ds.ubs(u,v);
         }
-        int cnt = 1;
-        for(int i = 1 ;i < n ; i++){
-            if(ds.find_ul_p(i-1) != ds.find_ul_p(i)){
+        int cnt = 0;
+        for(int i = 0 ;i < n ; i++){
+            if(ds.find_ul_p(i) == i){
                 cnt++;
-                ds.ubs(i-1 , i);
             }
         }
         return cnt - 1;
