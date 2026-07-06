@@ -1,24 +1,29 @@
 class Solution {
 public:
     int f(vector<int>& arr , int k){
-        // if(k < 0) return 0;
-        int l = 0;
-        int r = 0;
-        int cnt = 0;
-        int sum = 0;
+        int i = 0;
+        int j = 0;
         int n = arr.size();
-        while(l < n && r < n){
-            if(arr[r] % 2 == 1) k--;
-            while(k < 0){
-                if(arr[l] % 2 == 1) k++;
-                l++;
+        int sum = 0;
+        long long cnt = 0;
+        while(i < n && j < n){
+            sum += arr[j];
+            while(sum > k){
+                sum -= arr[i];
+                i++;
             }
-            cnt += (r - l + 1);
-            r++;
+            cnt += (j - i + 1);
+            j++;
         }
         return cnt;
     }
     int numberOfSubarrays(vector<int>& nums, int k) {
-        return f(nums , k) - f(nums , k -1);
+        int n = nums.size();
+        vector<int> arr(n);
+        for(int i = 0 ; i < n ; i++){
+            if(nums[i] % 2 == 0) arr[i] = 0;
+            else arr[i] = 1;
+        }
+        return f(arr , k) - f(arr , k-1);
     }
 };
