@@ -1,40 +1,41 @@
 class Solution {
 public:
     string minWindow(string s, string t) {
-        if (s.size() < t.size())
+        int n = s.size();
+        int m = t.size();
+        if (n < m)
             return "";
-        unordered_map<int, int> mpp;
+        vector<int> mpp(256, 0);
+        ;
         for (auto it : t) {
             mpp[it]++;
         }
-        int l = 0;
-        int r = 0;
+        int i = 0;
+        int j = 0;
         int cnt = 0;
         int sIdx = -1;
-        int n = s.size();
-        int len = INT_MAX;
-        while (l < n && r < n) {
-            if (!mpp.count(s[r]))
-                mpp[s[r]] = -1;
-            if (mpp[s[r]] > 0) {
+        int len = 1e9;
+        while (i < n && j < n) {
+            if (mpp[s[j]] > 0) {
                 cnt++;
             }
-            mpp[s[r]]--;
-            while (l < n && cnt == t.size()) {
-                if (r - l + 1 < len) {
-                    len = r - l + 1;
-                    sIdx = l;
+            mpp[s[j]]--;
+            if (cnt == m) {
+                while (cnt == m) {
+                    if (j - i + 1 < len) {
+                        len = j - i + 1;
+                        sIdx = i;
+                    }
+                    mpp[s[i]]++;
+                    if (mpp[s[i]] > 0) {
+                        cnt--;
+                    }
+                    i++;
                 }
-
-                mpp[s[l]]++;
-                if (mpp[s[l]] > 0)
-                    cnt--;
-                l++;
             }
-            r++;
+            j++;
         }
-        if (len == INT_MAX)
-            return "";
+        if(sIdx == -1) return "";
         return s.substr(sIdx, len);
     }
 };
