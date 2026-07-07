@@ -1,25 +1,24 @@
 class Solution {
 public:
     int f(vector<int> &nums , int k){
-        unordered_map<int , int>mpp;
-        // if(k < 0) return 0;
-        int l = 0;
-        int r = 0;
-        int cnt = 0;
+        int i = 0;
+        int j = 0;
         int n = nums.size();
-        while(l < n && r < n){
-            mpp[nums[r]]++;
+        unordered_map<int,int>mpp;
+        int tot = 0;
+        while(i < n && j < n){
+            mpp[nums[j]]++;
             while(mpp.size() > k){
-                mpp[nums[l]]--;
-                if(mpp[nums[l]] == 0) mpp.erase(nums[l]);
-                l++;
+                mpp[nums[i]]--;
+                if(mpp[nums[i]] == 0) mpp.erase(nums[i]);
+                i++;
             }
-            cnt += (r - l +1);
-            r++;
+            tot += (j - i + 1);
+            j++;
         }
-        return cnt;
+        return tot;
     }
     int subarraysWithKDistinct(vector<int>& nums, int k) {
-        return f(nums , k) - f(nums , k-1);
+        return f(nums , k) - f(nums , k -1);
     }
 };
