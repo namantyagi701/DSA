@@ -14,7 +14,7 @@ public:
         }
 
         if(dp[i][j] != -1) return dp[i][j];
-        if(s[i] == t[j]) return f(i-1 , j-1 , s , t, dp);
+        if(s[i] == t[j]) return dp[i][j] = f(i-1 , j-1 , s , t, dp);
         else{
             return dp[i][j] = min({(1 + f(i-1, j , s , t,dp)),
                          (1 + f(i-1 , j-1 , s , t,dp)),
