@@ -11,17 +11,24 @@
  */
 class Solution {
 public:
-    int f(TreeNode *root){
-        if(root -> left == NULL && root -> right == NULL) return 1;
- 
-        int l = 0 , r = 0;
-        if(root -> left) l = 1 + f(root -> left);
-        if(root -> right) r = 1 + f(root -> right);
-
-        return max(l , r);
-    }
     int maxDepth(TreeNode* root) {
-        if(root == NULL) return NULL;
-        return f(root);
+       if(root == nullptr) return 0;
+       stack<pair<TreeNode*,int>>st;
+       st.push({root , 1});
+       int maxi = -1;
+       while(!st.empty()){
+         auto it = st.top();
+         st.pop();
+         int h = it.second;
+         maxi = max(maxi , h);
+         TreeNode* node = it.first;
+         if(node -> left){
+            st.push({node -> left , h+1});
+         }
+         if(node -> right){
+            st.push({node -> right , h +1 });
+         }
+       } 
+       return maxi;
     }
 };
