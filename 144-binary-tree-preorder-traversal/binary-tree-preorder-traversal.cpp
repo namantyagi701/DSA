@@ -9,34 +9,18 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
-
- //--------------Iterative approach---------------
 class Solution {
 public:
+    void f(TreeNode* root , vector<int> &ans){
+        if(root == nullptr) return;
+
+        ans.push_back(root -> val);
+        f(root -> left , ans);
+        f(root -> right , ans);
+    }
     vector<int> preorderTraversal(TreeNode* root) {
-        vector<int>inorder;
-        TreeNode *curr = root;
-        while(curr != NULL){
-            if(curr -> left == NULL){
-                inorder.push_back(curr -> val);
-                curr = curr -> right;
-            }
-            else{
-                TreeNode*prev = curr -> left;
-                while(prev -> right && prev-> right != curr){
-                    prev = prev -> right;
-                }
-                if(prev -> right == NULL){
-                    prev -> right = curr;
-                    inorder.push_back(curr -> val);
-                    curr = curr -> left;
-                }
-                else{
-                    prev -> right = NULL;
-                    curr = curr -> right;
-                }
-            }
-        }
-        return inorder;
+        vector<int>ans;
+        f(root , ans);
+        return ans;
     }
 };
