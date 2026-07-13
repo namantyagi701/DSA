@@ -6,32 +6,31 @@
  *     TreeNode *right;
  *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
  *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left),
- * right(right) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
 class Solution {
 public:
-    TreeNode* insertIntoBST(TreeNode* root, int k) {
-        TreeNode* node = new TreeNode(k);
-        if(!root){
-            return node;
-        }
-        TreeNode* curr = root;
-        while (curr != NULL && curr->val != k) {
-            if (curr->val > k) {
-                if (curr->left) {
-                    curr = curr->left;
-                } else {
-                    curr->left = node;
-                }
-            } else {
-                if (curr->right) {
-                    curr = curr->right;
-                } else {
-                    curr->right = node;
-                }
+    TreeNode* insertIntoBST(TreeNode* root, int val) {
+        TreeNode* newNode = new TreeNode(val);
+        if(root == NULL) return newNode;
+        TreeNode* node = root;
+        TreeNode* prev = nullptr;
+        while(node != NULL){
+            if(node-> val > val){
+                prev = node;
+                node = node -> left;
             }
+            else{
+                prev = node;
+                node = node -> right;
+            }
+        }
+        if(prev -> val > val){
+            prev -> left = newNode;
+        }
+        else{
+            prev -> right = newNode;
         }
         return root;
     }
