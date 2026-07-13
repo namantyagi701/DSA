@@ -12,33 +12,27 @@
 class Solution {
 public:
     int kthSmallest(TreeNode* root, int k) {
-        int cnt = 0;
-        // vector<int>inorder;
-        int ans = -1;
+        // vector<int> ans;
+        stack<TreeNode*> st;
+        int count = 0;
         TreeNode* curr = root;
-        while(curr != NULL){
-            if(curr -> left == NULL){
-                cnt++;
-                if(cnt == k) ans = curr -> val;
-                curr = curr -> right;
+
+        while (curr != nullptr || !st.empty()) {
+
+            while (curr != nullptr) {
+                st.push(curr);
+                curr = curr->left;
             }
-            else{
-                TreeNode* prev = curr -> left;
-                while(prev -> right && prev -> right != curr){
-                    prev = prev -> right;
-                }
-                if(prev -> right == NULL){
-                    prev ->right = curr;
-                    curr = curr -> left;
-                }
-                else{
-                    prev -> right = NULL;
-                    cnt++;
-                    if(cnt == k) ans = curr -> val;
-                    curr = curr -> right;
-                }
-            }
+
+            curr = st.top();
+            st.pop();
+     
+            count++;
+            if(count == k) return curr -> val;
+
+            curr = curr->right;
         }
-        return ans;
+        return -1;
+        
     }
 };
