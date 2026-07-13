@@ -1,1 +1,1 @@
-<h2>insert-into-a-binary-search-tree Notes</h2><hr>[ Time taken: 7m 20s ]
+<h2>insert-into-a-binary-search-tree Notes</h2><hr>[ Time taken: 5m 23s ]
