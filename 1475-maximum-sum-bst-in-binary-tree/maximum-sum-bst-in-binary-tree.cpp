@@ -1,43 +1,49 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left),
+ * right(right) {}
+ * };
+ */
 class Solution {
 public:
     int maxSum = 0;
-
     struct NodeInfo {
-        int mini, maxi, sum;
-        bool isBST;
+        int maxi, mini, sum;
+        bool isBst;
     };
+        NodeInfo dfs(TreeNode* root) {
+            if (!root)
+                return {INT_MIN, INT_MAX, 0, true};
 
-    NodeInfo dfs(TreeNode* root) {
-        if (!root) return {INT_MAX, INT_MIN, 0, true};
+            auto left = dfs(root->left);
+            auto right = dfs(root->right);
 
-        auto left = dfs(root->left);
-        auto right = dfs(root->right);
-
-        NodeInfo curr;
-
-     
-        if (left.isBST && right.isBST &&
-            root->val > left.maxi && root->val < right.mini) {
-
-            curr.isBST = true;
-            curr.sum = left.sum + right.sum + root->val;
-
-            curr.mini = min(root->val, left.mini);
-            curr.maxi = max(root->val, right.maxi);
-
-            maxSum = max(maxSum, curr.sum);
-        } else {
-
-            curr.isBST = false;
-            curr.sum = 0;
-            curr.mini = INT_MIN;
-            curr.maxi = INT_MAX;
+            NodeInfo curr;
+            if (left.isBst && right.isBst && root->val > left.maxi &&
+                root->val < right.mini) {
+                    curr.isBst = true;
+                    curr.mini = min(root->val, left.mini);
+                    curr.maxi = max(root->val , right.maxi);
+                    curr.sum = root -> val + left.sum + right.sum;
+                    maxSum = max(maxSum , curr.sum);
+            }
+            else{
+                curr.isBst = false;
+                curr.mini = INT_MIN;
+                curr.maxi = INT_MAX;
+                curr.sum = 0;
+            }
+            return curr;
         }
-
-        return curr;
-    }
-
     int maxSumBST(TreeNode* root) {
+        if (!root)
+            return 0;
         dfs(root);
         return maxSum;
     }
