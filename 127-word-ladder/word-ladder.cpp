@@ -1,29 +1,28 @@
 class Solution {
 public:
-    int ladderLength(string beginWord, string endWord,
-                     vector<string>& wordList) {
-        unordered_set<string> st;
-        for (int i = 0; i < wordList.size(); i++) {
-            st.insert(wordList[i]);
+    int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
+        queue<pair<int,string>>q;
+        q.push({1 , beginWord});
+        set<string>st;
+        for(auto it: wordList){
+            st.insert(it);
         }
-        queue<pair<int, string>> q;
-        q.push({1, beginWord});
-        while (!q.empty()) {
-            auto ele = q.front();
+        while(!q.empty()){
+            auto curr = q.front();
             q.pop();
-            int cnt = ele.first;
-            string word = ele.second;
+            int cnt = curr.first;
+            string word = curr.second;
             if(word == endWord) return cnt;
-            st.erase(word);
-            for (int i = 0; i < word.size(); i++) {
+            for(int i = 0 ; i < word.size() ; i++){
                 char og = word[i];
-                for (char ch = 'a'; ch <= 'z'; ch++) {
+                for(char ch = 'a' ; ch <= 'z'; ch++){
                     word[i] = ch;
-                    if(st.count(word)){
-                        q.push({cnt + 1 , word});
+                    if(st.find(word) != st.end()){
+                        q.push({cnt+1 , word});
+                        st.erase(word);
                     }
+                    word[i] = og;
                 }
-                word[i] = og;
             }
         }
         return 0;
