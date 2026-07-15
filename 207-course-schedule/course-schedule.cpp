@@ -1,35 +1,49 @@
 class Solution {
 public:
-    bool canFinish(int n, vector<vector<int>>& arr) {
-        vector<int>indegree(n);
-        vector<vector<int>>adj(n);
-        for(int i = 0 ; i < arr.size() ; i++){
-            int u = arr[i][0];
-            int v = arr[i][1];
-            adj[v].push_back(u);
+
+    bool dfs(int node,
+             vector<vector<int>>& adj,
+             vector<int>& vis,
+             vector<int>& pathVis) {
+                vis[node] = 1;
+                pathVis[node] = 1;
+                for(auto it: adj[node]){
+                    if(!vis[it]){
+                        if(dfs(it,adj,vis,pathVis)) return true;
+                    }
+                    else if(pathVis[it]){
+                        return true;
+                    }
+                }
+                pathVis[node] = 0;
+                return false;       
+    }
+
+    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
+
+        vector<vector<int>> adj(numCourses);
+
+        for(int i = 0; i < prerequisites.size(); i++) {
+
+            int u = prerequisites[i][1];
+            int v = prerequisites[i][0];
+
+            adj[u].push_back(v);
         }
-        for(int i = 0 ; i < n ; i++){
-            for(auto it : adj[i]){
-                indegree[it]++;
+
+        vector<int> vis(numCourses, 0);
+        vector<int> pathVis(numCourses, 0);
+
+        for(int i = 0; i < numCourses; i++) {
+
+            if(!vis[i]) {
+
+                if(dfs(i, adj, vis, pathVis)) {
+                    return false;
+                }
             }
         }
-        queue<int>q;
-        for(int i = 0 ; i < n ; i++){
-            if(indegree[i] == 0){
-                q.push(i);
-            }
-        }
-        while(!q.empty()){
-            int ele = q.front();
-            q.pop();
-            for(auto it: adj[ele]){
-                indegree[it]--;
-                if(indegree[it] == 0) q.push(it);
-            }
-        }
-        for(int i = 0 ; i < n ; i++){
-            if(indegree[i] != 0) return false;
-        }
+
         return true;
     }
 };
