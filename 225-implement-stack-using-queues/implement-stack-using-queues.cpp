@@ -6,22 +6,23 @@ public:
     }
     
     void push(int x) {
-        q.push_back(x);
+       q.push_front(x); 
     }
     
     int pop() {
-        int x = q.back();
-        q.pop_back();
+        int x = q.front();
+        q.pop_front();
         return x;
     }
     
     int top() {
-         int x = q.back();
-         return x;
+        int x = q.front();
+        return x;
     }
     
     bool empty() {
-        return(!q.size());
+        if(q.size() == 0) return true;
+        return false;
     }
 };
 
