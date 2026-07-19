@@ -9,12 +9,19 @@
 class Solution {
 public:
     ListNode *detectCycle(ListNode *head) {
-        // temp = head;
-        // ListNode* Node = new ListNode(-1);
-        while(head != NULL){
-            if(head -> val == INT_MAX) return head;
-            head -> val = INT_MAX;
-            head = head -> next;
+        ListNode* slow = head;
+        ListNode* fast = head;
+        while(fast != NULL && fast -> next != NULL){
+            slow = slow -> next;
+            fast = fast -> next -> next;
+            if(slow == fast){
+                slow = head;
+                while(fast != slow){
+                    slow = slow -> next;
+                    fast = fast -> next;
+                }
+                return slow;
+            }
         }
         return NULL;
     }
