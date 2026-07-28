@@ -1,24 +1,24 @@
 class Solution {
 public:
-    void setZeroes(vector<vector<int>>& arr) {
-        int n = arr.size();
-        int m = arr[0].size();
-        vector<pair<int , int>>vect;
+    void setZeroes(vector<vector<int>>& matrix) {
+        int n = matrix.size();
+        int m = matrix[0].size();
+        vector<pair<int , int>> vect;
         for(int i = 0 ; i < n ; i++){
             for(int j = 0 ; j < m ; j++){
-                if(arr[i][j] == 0){
+                if(matrix[i][j] == 0){
                     vect.push_back({i , j});
-                } 
+                }
             }
         }
-        for(int i = 0 ; i < vect.size() ; i++){
-            int row = vect[i].first;
-            int col = vect[i].second;
-            for(int j = 0 ; j < m ; j++){
-                arr[row][j] = 0;
+        for(auto it: vect){
+            int row = it.first;
+            int col = it.second;
+            for(int i = 0 ; i < m ; i++){
+                matrix[row][i] = 0;
             }
-            for(int j = 0 ; j < n ; j++){
-                arr[j][col]  = 0;
+            for(int i = 0 ; i < n ; i++){
+                matrix[i][col] = 0;
             }
         }
     }
