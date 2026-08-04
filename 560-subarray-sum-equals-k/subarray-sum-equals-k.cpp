@@ -8,7 +8,7 @@ public:
         int cnt = 0;
         while(l < nums.size()){
             ps += nums[l];
-            int rem = ps - k; 
+            int rem = ps - k;
             cnt += mpp[rem];
             mpp[ps]++;
             l++;
