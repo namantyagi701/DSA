@@ -1,27 +1,25 @@
 class Solution {
 public:
-    int f(int i , int amt , vector<int> &coins ,vector<vector<int>> &dp){
-        if(i == 0){
-           if(amt == 0) return 0;
-           if((amt % coins[i]) == 0) return amt / coins[i];
-           return 1e6;
+    int f(int i, vector<int>& arr, int k , vector<vector<int>> &dp) {
+        if (i == 0) {
+            if (k % arr[i] == 0)
+                return k / arr[i];
+            return 1e5;
         }
-
-        if(dp[i][amt] != -1) return dp[i][amt];
-
-        long long nt = f(i-1 , amt , coins ,dp);
-        long long t = 1e6;
-        if(amt >= coins[i]){
-            t = 1 + f(i , amt - coins[i] , coins ,dp);
+        if(dp[i][k] != -1) return dp[i][k];
+        int nt = f(i - 1, arr, k , dp);
+        int take = 1e5;
+        if (arr[i] <= k) {
+            take = 1 + f(i, arr, k - arr[i] , dp);
         }
-        return dp[i][amt] = min(t , nt);
+        return dp[i][k] = min(take , nt);
     }
+
     int coinChange(vector<int>& coins, int amount) {
-        sort(coins.begin() ,coins.end());
         int n = coins.size();
-        vector<vector<int>> dp(n+1 , vector<int>(amount+1 , -1));
-        int ans = f(n-1 , amount ,coins ,dp);
-        if(ans == 1e6) return -1;
-        return ans;
+        vector<vector<int>>dp(n, vector<int>(amount+1 , -1));
+        int ans = f(n - 1, coins, amount , dp);
+        if(ans == 1e5) return -1;
+        else return ans;
     }
 };
