@@ -10,7 +10,7 @@ public:
             mpp[s[j]]++;
             while(mpp[s[j]] > 1){
                mpp[s[i]]--;
-               if(mpp[s[i]] == 0) mpp.erase(s[i]);
+            //    if(mpp[s[i]] == 0) mpp.erase(s[i]);
                i++;
             }
             maxcnt = max(maxcnt , j - i + 1);
