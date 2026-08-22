@@ -12,44 +12,44 @@
 class Solution {
 public:
     TreeNode* deleteNode(TreeNode* root, int key) {
-        if(root == NULL) return NULL;
-        if(root-> val == key) return helper(root);
-
-        TreeNode* curr = root;
-        while(curr){
-            if(curr -> val > key){
-              if(curr -> left != NULL && curr -> left -> val == key){
-                curr -> left = helper(curr -> left);
-                break;
-              }
-              else{
-                curr = curr -> left;
-              }
+        TreeNode* node = root;
+        if(!root) return nullptr;
+        if(root -> val == key) return helper(root);
+        while(node != nullptr){
+            if(node -> val > key){
+                if(node-> left != nullptr && node -> left -> val == key){
+                    node -> left = helper(node -> left);
+                    return root;
+                }
+                else{
+                    node = node -> left;
+                }
             }
             else{
-               if(curr -> right != NULL && curr -> right -> val == key){
-                curr -> right = helper(curr -> right);
-                break;
-               }
-               else{
-                curr = curr -> right;
-               }
+                if(node-> right != nullptr && node -> right -> val == key){
+                    node -> right = helper(node -> right);
+                    return root;
+                }
+                else{
+                    node = node -> right;
+                }
             }
         }
         return root;
     }
     TreeNode* helper(TreeNode* node){
-        if(node -> left == NULL) return node -> right;
-        else if(node -> right == NULL) return node -> left;
+        if(node -> left == nullptr) return node -> right;
+        else if(node -> right == nullptr) return node -> left;
         else{
-            TreeNode *rightChild = node -> right;
+            TreeNode* rightChild = node -> right;
             TreeNode* lastChild = last(node -> left);
             lastChild -> right = rightChild;
             return node -> left;
         }
+        
     }
     TreeNode* last(TreeNode* node){
         if(!node -> right) return node;
-        return last(node -> right); 
+        return last(node -> right);
     }
 };
