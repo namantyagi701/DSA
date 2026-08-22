@@ -19,8 +19,8 @@ public:
         if(i == arr.size() || arr[i] > ub) return NULL;
 
         TreeNode* root = new TreeNode(arr[i++]);
-        
-        root -> left = f(i , arr , root ->val);
+
+        root -> left = f(i , arr , root -> val);
         root -> right = f(i , arr , ub);
 
         return root;
