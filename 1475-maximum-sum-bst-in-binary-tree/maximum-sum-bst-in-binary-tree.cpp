@@ -11,36 +11,36 @@
  * };
  */
 class Solution {
-public:
+private:
     int maxSum = 0;
-    struct NodeInfo {
-        int maxi, mini, sum;
+
+public:
+    struct Nodeinfo {
+        int sum, maxi, mini;
         bool isBst;
     };
-        NodeInfo dfs(TreeNode* root) {
-            if (!root)
-                return {INT_MIN, INT_MAX, 0, true};
+    Nodeinfo dfs(TreeNode* root) {
+        if (root == nullptr)
+            return {0, INT_MIN, INT_MAX, true};
 
-            auto left = dfs(root->left);
-            auto right = dfs(root->right);
-
-            NodeInfo curr;
-            if (left.isBst && right.isBst && root->val > left.maxi &&
-                root->val < right.mini) {
-                    curr.isBst = true;
-                    curr.mini = min(root->val, left.mini);
-                    curr.maxi = max(root->val , right.maxi);
-                    curr.sum = root -> val + left.sum + right.sum;
-                    maxSum = max(maxSum , curr.sum);
-            }
-            else{
-                curr.isBst = false;
-                curr.mini = INT_MIN;
-                curr.maxi = INT_MAX;
-                curr.sum = 0;
-            }
-            return curr;
+        auto left = dfs(root->left);
+        auto right = dfs(root->right);
+        Nodeinfo curr;
+        if (left.isBst && right.isBst && left.maxi < root->val &&
+            right.mini > root->val) {
+            curr.sum = root -> val + left.sum + right.sum;
+            curr.maxi = max(right.maxi, root->val);
+            curr.mini = min(left.mini, root->val);
+            curr.isBst = true;
+            maxSum = max(maxSum, curr.sum);
+        } else {
+            curr.sum = 0;
+            curr.maxi = INT_MAX;
+            curr.mini = INT_MIN;
+            curr.isBst = false;
         }
+        return curr;
+    }
     int maxSumBST(TreeNode* root) {
         if (!root)
             return 0;
