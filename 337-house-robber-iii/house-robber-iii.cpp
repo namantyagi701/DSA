@@ -11,25 +11,19 @@
  */
 class Solution {
 public:
-    pair<int, int> dfs(TreeNode* root) {
-        if (root == nullptr)
-            return {0, 0};
+    pair<int,int> f(TreeNode* root){
+        if(root == nullptr) return {0 , 0};
 
-        auto left = dfs(root->left);
-        auto right = dfs(root->right);
+        auto left = f(root -> left);
+        auto right = f(root -> right);
 
-        // First = rob current node
-        int rob = root->val + left.second + right.second;
+        int rob = root-> val + left.second + right.second;
+        int notrob = max(left.first , left.second) + max(right.first , right.second);
 
-        // Second = don't rob current node
-        int notRob = max(left.first, left.second) +
-                     max(right.first, right.second);
-
-        return {rob, notRob};
+        return {rob , notrob};
     }
-
     int rob(TreeNode* root) {
-        auto ans = dfs(root);
-        return max(ans.first, ans.second);
+        auto ans = f(root);
+        return max(ans.first , ans.second);
     }
 };
